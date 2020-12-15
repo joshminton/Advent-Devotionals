@@ -83,7 +83,7 @@ public class DevotionalEntryAdapter extends RecyclerView.Adapter<DevotionalEntry
                 //nothing for now
             }
         });
-        Log.d("Image url: ", entries.get(position).getDevotionalSeries().getImageURL());
+        Log.d("Image url: ", entries.get(position).getImageURL());
         Log.d("Image width: ", String.valueOf(viewHolder.devotionImage.getWidth()));
     }
 

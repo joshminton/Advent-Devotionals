@@ -1,6 +1,8 @@
 package com.example.adventuality;
 
-public class Devotional {
+import java.io.Serializable;
+
+public class Devotional implements Serializable {
 
     private String name;
     private String description;
@@ -10,6 +12,7 @@ public class Devotional {
     private String subscribeURL;
     private String sampleURL;
     private String feedURL;
+    private boolean followed;
 
     public Devotional(String name, String description, String imageURL, String homepageURL, String twitterURL, String subscribeURL, String sampleURL) {
         this.name = name;
@@ -92,6 +95,14 @@ public class Devotional {
     public Devotional(String name, String feedURL) {
         this.name = name;
         this.feedURL = feedURL;
+    }
+
+    public boolean isFollowed() {
+        return followed;
+    }
+
+    public void setFollowed(boolean followed) {
+        this.followed = followed;
     }
 
     @Override

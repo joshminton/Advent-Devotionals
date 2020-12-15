@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DevotionalActivity"></activity>
+        <activity android:name=".EntryActivity"></activity>
+        <activity android:name=".DevotionalActivity" />
         <activity android:name=".ChooseActivity" />
         <activity android:name=".DevotionalsActivity" />
         <activity android:name=".MainActivity">

@@ -83,7 +83,7 @@ public class DevotionalAdapter extends RecyclerView.Adapter<DevotionalAdapter.Vi
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.devotionalTitle.setText(devotionals.get(position).getName());
-        Picasso.get().load(devotionals.get(position).getImageURL()).into(viewHolder.devotionalImage, new Callback() {
+        Picasso.get().load(devotionals.get(position).getImageURL()).placeholder(R.drawable.example_image).into(viewHolder.devotionalImage, new Callback() {
             @Override
             public void onSuccess() {
 //                viewHolder.devotionalImage.setScaleType(ImageView.ScaleType.FIT_CENTER);//Or ScaleType.FIT_CENTER
@@ -93,10 +93,6 @@ public class DevotionalAdapter extends RecyclerView.Adapter<DevotionalAdapter.Vi
                 //nothing for now
             }
         });
-
-        if(devotionals.get(position).getImageURL() != null){
-            Log.d("Image url: ", devotionals.get(position).getImageURL());
-        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

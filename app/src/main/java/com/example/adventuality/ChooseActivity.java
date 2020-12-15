@@ -5,8 +5,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,7 +25,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class ChooseActivity extends AppCompatActivity implements DevotionalAdapter.OnClickListener {
@@ -31,6 +37,8 @@ public class ChooseActivity extends AppCompatActivity implements DevotionalAdapt
     private RecyclerView lstDevotionals;
     private RecyclerView.LayoutManager layoutManager;
     private DevotionalAdapter devotionalsAdapter;
+    private ArrayList<String> chosenDevotionalFeedURLs;
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +51,8 @@ public class ChooseActivity extends AppCompatActivity implements DevotionalAdapt
         lstDevotionals.setLayoutManager(layoutManager);
         lstDevotionals.setAdapter(devotionalsAdapter);
 
+        sharedPref = getSharedPreferences("preferences", Context.MODE_PRIVATE);
+
         final AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -50,6 +60,8 @@ public class ChooseActivity extends AppCompatActivity implements DevotionalAdapt
             }
         };
 
+        chosenDevotionalFeedURLs = new ArrayList<>();
+        getChosenDevotionals();
 
         getDevotionals();
     }
@@ -71,7 +83,9 @@ public class ChooseActivity extends AppCompatActivity implements DevotionalAdapt
                                 if(currentDevotional.has("feed_url")) {
                                     Devotional devotional = new Devotional(currentDevotional.getString("label"),
                                             currentDevotional.getString("feed_url"));
-                                    getDevotionalDetails(devotional);
+                                    devotional.setImageURL(currentDevotional.getString("image_url").replace("http:", "https:"));
+//                                    getDevotionalDetails(devotional);
+                                    devotional.setFollowed(chosenDevotionalFeedURLs.contains(currentDevotional.getString("feed_url")));
                                     devotionals.add(devotional);
                                     devotionalsAdapter.notifyDataSetChanged();
                                 }
@@ -92,46 +106,16 @@ public class ChooseActivity extends AppCompatActivity implements DevotionalAdapt
         requestQueue.add(getRequest);
     }
 
-    protected void getDevotionalDetails(final Devotional devotional){
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        String name = devotional.getName();
-        Log.d("getting details for ", name);
-        final String devotionalURL = devotional.getFeedURL();
-        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, devotionalURL, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i("Successful request", (String.valueOf(response)));
-                        try {
-                            devotional.setDescription(response.getString("description"));
-                            devotional.setImageURL(response.getString("image_url").replace("http:", "https:"));
-                            devotional.setHomepageURL(response.getString("homepage"));      //validate if any of these are missing?
-                            devotional.setTwitterURL(response.getString("twitter_handle"));
-                            devotional.setSubscribeURL(response.getString("subscribe_url"));
-                            devotional.setSampleURL(response.getString("sample_chapter_url"));
-//                            Log.d("Devotional updated: ", devotional.toString());
-                            devotionalsAdapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("Unsuccessful request", (String.valueOf(error)));
-                    }
-                });
-
-        requestQueue.add(getRequest);
-    }
-
-
     @Override
     public void onDevotionalClick(int position) {
-        Log.d("Clicked: ", devotionals.get(position).getName());
-
         Intent intent = new Intent(this, DevotionalActivity.class);
+        intent.putExtra("Devotional", devotionals.get(position));
         startActivity(intent);
     }
+
+    public void getChosenDevotionals(){
+        String followedDevotionals = sharedPref.getString("devotionals", "");
+        chosenDevotionalFeedURLs = new ArrayList<>(Arrays.asList(followedDevotionals.split("@")));
+    }
+
 }
