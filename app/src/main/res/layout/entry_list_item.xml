@@ -12,11 +12,6 @@
     card_view:cardCornerRadius="10dp"
     card_view:cardElevation="8dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -28,7 +23,7 @@
                 <ImageView
                     android:id="@+id/dailyDevImageView"
                     android:layout_width="match_parent"
-                    android:layout_height="128dp"
+                    android:layout_height="192dp"
                     android:backgroundTint="#000000"
                     android:backgroundTintMode="add"
                     android:scaleType="center"
@@ -55,20 +50,8 @@
                 android:fontFamily="@font/karla_bold"
                 android:text="Title of Devotional"
                 android:textColor="#BFFFFFFF"
-                android:textSize="8pt">
+                android:textSize="24sp">
 
             </TextView>
         </RelativeLayout>
-
-        <TextView
-            android:id="@+id/dailyDevText"
-            android:layout_width="match_parent"
-            android:layout_height="128dp"
-            android:layout_margin="8dp"
-            android:fontFamily="@font/karla"
-            android:text="Hello!"
-            android:textColor="#BFFFFFFF">
-
-        </TextView>
-    </LinearLayout>
 </androidx.cardview.widget.CardView>

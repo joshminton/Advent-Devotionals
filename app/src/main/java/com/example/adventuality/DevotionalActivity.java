@@ -148,13 +148,16 @@ public class DevotionalActivity extends AppCompatActivity {
         fab.setText("Add");
         devotional.setFollowed(false);
         String followedDevotionals = sharedPref.getString("devotionals", "");
+        Log.d("Old array", followedDevotionals);
         ArrayList<String> followedDevotionalsArray = new ArrayList<>(Arrays.asList(followedDevotionals.split("@")));
         if(followedDevotionalsArray.contains(devotional.getFeedURL())){
             followedDevotionalsArray.remove(devotional.getFeedURL());
             followedDevotionals = "";
             for(String d : followedDevotionalsArray){
-                followedDevotionals.concat(d + "@");
+                Log.d("Followed array:", "is" + followedDevotionalsArray.toString());
+                followedDevotionals = followedDevotionals.concat(d + "@");
             }
+            Log.d("New array", "is" + followedDevotionals);
             sharedPref.edit().putString("devotionals", followedDevotionals).apply();
         }
     }

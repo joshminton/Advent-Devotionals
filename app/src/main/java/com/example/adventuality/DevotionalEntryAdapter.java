@@ -2,6 +2,7 @@ package com.example.adventuality;
 
         import android.util.Log;
         import android.view.LayoutInflater;
+        import android.view.View;
         import android.view.ViewGroup;
         import android.widget.ImageView;
         import android.widget.TextView;
@@ -18,30 +19,43 @@ package com.example.adventuality;
 public class DevotionalEntryAdapter extends RecyclerView.Adapter<DevotionalEntryAdapter.ViewHolder> {
 
     private ArrayList<DevotionalEntry> entries;
-    private HashMap<String, Devotional> devotionals;
+    private OnClickListener mOnClickListener;
 
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private CardView layout;
         private TextView devotionTitle;
         private TextView devotionDescription;
         private ImageView devotionImage;
+        private OnClickListener onClickListener;
 
-        public ViewHolder(CardView view) {
+        public ViewHolder(CardView view, OnClickListener onClickListener) {
             super(view);
             layout = view;
             devotionTitle = view.findViewById(R.id.dailyDevTitle);
-            devotionDescription = view.findViewById(R.id.dailyDevText);
+//            devotionDescription = view.findViewById(R.id.dailyDevText);
             devotionImage = view.findViewById(R.id.dailyDevImageView);
             // Define click listener for the ViewHolder's View;
+            this.onClickListener = onClickListener;
+            view.setOnClickListener(this);
         }
 
         public CardView getCardView() {
             return layout;
         }
+
+
+        @Override
+        public void onClick(View v) {
+            onClickListener.onEntryClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnClickListener{
+        void onEntryClick(int position);
     }
 
     /**
@@ -50,9 +64,9 @@ public class DevotionalEntryAdapter extends RecyclerView.Adapter<DevotionalEntry
      * @param dataSet String[] containing the data to populate views to be used
      * by RecyclerView.
      */
-    public DevotionalEntryAdapter(ArrayList<DevotionalEntry> dataSet, HashMap<String, Devotional> devotionals) {
+    public DevotionalEntryAdapter(ArrayList<DevotionalEntry> dataSet, OnClickListener onClickListener) {
         entries = dataSet;
-        this.devotionals = devotionals;
+        this.mOnClickListener = onClickListener;
     }
 
     // Create new views (invoked by the layout manager)
@@ -62,7 +76,7 @@ public class DevotionalEntryAdapter extends RecyclerView.Adapter<DevotionalEntry
         CardView view = (CardView) LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.entry_list_item, viewGroup, false);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnClickListener);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -72,7 +86,7 @@ public class DevotionalEntryAdapter extends RecyclerView.Adapter<DevotionalEntry
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.devotionTitle.setText(entries.get(position).getTitle());
-        viewHolder.devotionDescription.setText(entries.get(position).getDescription());
+//        viewHolder.devotionDescription.setText(entries.get(position).getDescription());
         Picasso.get().load(entries.get(position).getImageURL()).into(viewHolder.devotionImage, new Callback() {
             @Override
             public void onSuccess() {
@@ -91,6 +105,10 @@ public class DevotionalEntryAdapter extends RecyclerView.Adapter<DevotionalEntry
     @Override
     public int getItemCount() {
         return entries.size();
+    }
+
+    public DevotionalEntry getItem(int position) {
+        return entries.get(position);
     }
 }
 

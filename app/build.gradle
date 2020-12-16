@@ -35,4 +35,6 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation  "io.noties.markwon:core:4.6.0"
+    implementation  "io.noties.markwon:image:4.6.0"
+    implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
 }

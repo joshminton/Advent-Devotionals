@@ -28,7 +28,7 @@ public class DevotionsAdapter extends RecyclerView.Adapter<DevotionsAdapter.View
             super(view);
             layout = view;
             devotionTitle = view.findViewById(R.id.dailyDevTitle);
-            devotionDescription = view.findViewById(R.id.dailyDevText);
+//            devotionDescription = view.findViewById(R.id.dailyDevText);
             devotionImage = view.findViewById(R.id.dailyDevImage);
             // Define click listener for the ViewHolder's View;
         }

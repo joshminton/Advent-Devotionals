@@ -66,6 +66,12 @@ public class ChooseActivity extends AppCompatActivity implements DevotionalAdapt
         getDevotionals();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        updateChosen();
+    }
+
     protected void getDevotionals() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         final String allDevotionals = "https://prayermate-dt.s3.eu-west-2.amazonaws.com/galleries/dev_challenge.json";
@@ -116,6 +122,18 @@ public class ChooseActivity extends AppCompatActivity implements DevotionalAdapt
     public void getChosenDevotionals(){
         String followedDevotionals = sharedPref.getString("devotionals", "");
         chosenDevotionalFeedURLs = new ArrayList<>(Arrays.asList(followedDevotionals.split("@")));
+    }
+
+    public void updateChosen(){
+        getChosenDevotionals();
+        for(Devotional dev : devotionals){
+            if(chosenDevotionalFeedURLs.contains(dev.getFeedURL())){
+                dev.setFollowed(true);
+            } else {
+                dev.setFollowed(false);
+            }
+        }
+        devotionalsAdapter.notifyDataSetChanged();
     }
 
 }

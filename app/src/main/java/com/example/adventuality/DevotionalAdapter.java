@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class DevotionalAdapter extends RecyclerView.Adapter<DevotionalAdapter.ViewHolder> {
@@ -26,12 +28,12 @@ public class DevotionalAdapter extends RecyclerView.Adapter<DevotionalAdapter.Vi
      * (custom ViewHolder).
      */
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private CardView layout;
+        private MaterialCardView layout;
         private TextView devotionalTitle;
         private ImageView devotionalImage;
         OnClickListener onClickListener;
 
-        public ViewHolder(CardView view, OnClickListener onClickListener) {
+        public ViewHolder(MaterialCardView view, OnClickListener onClickListener) {
             super(view);
             layout = view;
             devotionalTitle = view.findViewById(R.id.devotionalTitle);
@@ -41,7 +43,7 @@ public class DevotionalAdapter extends RecyclerView.Adapter<DevotionalAdapter.Vi
             view.setOnClickListener(this);
         }
 
-        public CardView getCardView() {
+        public MaterialCardView getCardView() {
             return layout;
         }
 
@@ -70,7 +72,7 @@ public class DevotionalAdapter extends RecyclerView.Adapter<DevotionalAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
-        CardView view = (CardView) LayoutInflater.from(viewGroup.getContext())
+        MaterialCardView view = (MaterialCardView) LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.devotional_list_item, viewGroup, false);
 
         return new ViewHolder(view, mOnClickListener);
@@ -83,6 +85,12 @@ public class DevotionalAdapter extends RecyclerView.Adapter<DevotionalAdapter.Vi
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.devotionalTitle.setText(devotionals.get(position).getName());
+        if(devotionals.get(position).isFollowed()){
+            viewHolder.layout.setStrokeColor(viewHolder.getCardView().getContext().getColor(R.color.colorAccent));
+            viewHolder.layout.setStrokeWidth(12);
+        } else {
+            viewHolder.layout.setStrokeWidth(0);
+        }
         Picasso.get().load(devotionals.get(position).getImageURL()).placeholder(R.drawable.example_image).into(viewHolder.devotionalImage, new Callback() {
             @Override
             public void onSuccess() {

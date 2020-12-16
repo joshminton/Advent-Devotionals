@@ -1,10 +1,13 @@
 package com.example.adventuality;
 
-public class DevotionalEntry {
+import java.io.Serializable;
+
+public class DevotionalEntry implements Serializable, Comparable<DevotionalEntry> {
     private String uid;
     private String date;
     private String title;
     private String description;
+    private String seriesTitle;
     private boolean isMarkdown;
     private Devotional devotionalSeries;
     private String imageURL;
@@ -65,6 +68,14 @@ public class DevotionalEntry {
         this.imageURL = imageURL;
     }
 
+    public String getSeriesTitle() {
+        return seriesTitle;
+    }
+
+    public void setSeriesTitle(String seriesTitle) {
+        this.seriesTitle = seriesTitle;
+    }
+
     @Override
     public String toString() {
         return "DevotionalEntry{" +
@@ -74,5 +85,10 @@ public class DevotionalEntry {
                 ", description='" + description + '\'' +
                 ", isMarkdown=" + isMarkdown +
                 '}';
+    }
+
+    @Override
+    public int compareTo(DevotionalEntry o) {
+        return o.getTitle().compareTo(title);
     }
 }

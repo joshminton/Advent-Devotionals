@@ -15,32 +15,54 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_margin="16dp">
-            <ImageView
-                android:id="@+id/txtEntryImage"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:adjustViewBounds="true"
-                android:src="@drawable/example_image"
-                android:layout_marginEnd="16dp"
-                >
-            </ImageView>
-            <TextView
-                android:id="@+id/txtEntryTitle"
+            <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Title of devotional"
-                android:layout_gravity="center"
-                android:fontFamily="@font/karla_bold"
-                android:textSize="20sp">
+                app:cardCornerRadius="8dp"
+                android:layout_marginEnd="16dp"
+                android:elevation="1dp">
+                <ImageView
+                    android:id="@+id/entryImage"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/example_image">
+                </ImageView>
+            </androidx.cardview.widget.CardView>
 
-            </TextView>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+                <TextView
+                    android:id="@+id/txtEntryTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Title of devotional"
+                    android:layout_marginBottom="4dp"
+                    android:fontFamily="@font/karla_bold"
+                    android:textSize="20sp">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/txtEntryDevotionalTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/karla_italic"
+                    android:text="Title of devotional"
+                    android:textSize="16sp"></TextView>
+            </LinearLayout>
         </LinearLayout>
+
         <TextView
             android:id="@+id/txtEntry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:paddingHorizontal="16dp">
+            android:fontFamily="@font/karla"
+            android:paddingHorizontal="16dp"
+            android:layout_marginBottom="16dp">
 
         </TextView>
 
