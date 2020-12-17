@@ -55,13 +55,6 @@ public class ChooseActivity extends AppCompatActivity implements DevotionalAdapt
 
         sharedPref = getSharedPreferences("preferences", Context.MODE_PRIVATE);
 
-        final AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Devotional clickedDevotional = (Devotional) devotionalsAdapter.getItem(position);
-            }
-        };
-
         chosenDevotionalFeedURLs = new ArrayList<>();
         getChosenDevotionals();
 
@@ -131,8 +124,6 @@ public class ChooseActivity extends AppCompatActivity implements DevotionalAdapt
             ((MaterialCardView) layoutManager.findViewByPosition(position)).setStrokeWidth(12);
             ((MaterialCardView) layoutManager.findViewByPosition(position)).setStrokeColor(getColor(R.color.colorAccent));
         }
-
-        Log.d("CHECK", "MATE");
     }
 
     public void getChosenDevotionals(){

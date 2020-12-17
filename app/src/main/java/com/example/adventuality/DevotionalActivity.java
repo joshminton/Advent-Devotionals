@@ -80,7 +80,6 @@ public class DevotionalActivity extends AppCompatActivity {
         if(!devotional.getHomepageURL().equals("none")){ //there's a better way of checking this, I know, this will do for now.
             findViewById(R.id.linkBox).setVisibility(View.VISIBLE);
             ((TextView) findViewById(R.id.txtLink)).setText(devotional.getHomepageURL());
-            Log.d("VISIBLE", " " + devotional.getHomepageURL());
         } else {
             findViewById(R.id.linkBox).setVisibility(View.GONE);
         }

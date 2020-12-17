@@ -3,6 +3,7 @@ package com.example.adventuality;
 import android.content.Context;
 import android.util.AttributeSet;
 
+//complete credit for this class: https://stackoverflow.com/a/51359465/3032936
 public class SquareImageView extends androidx.appcompat.widget.AppCompatImageView {
 
     public SquareImageView(Context context) {

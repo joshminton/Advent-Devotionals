@@ -225,6 +225,8 @@ public class MainActivity extends AppCompatActivity implements DevotionalEntryAd
 
     }
 
+
+    //CREDIT https://stackoverflow.com/a/4011339/3032936
     String ordinal(int num)
     {
         String[] suffix = {"th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"};
