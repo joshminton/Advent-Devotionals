@@ -140,6 +140,7 @@ public class ChooseActivity extends AppCompatActivity implements DevotionalAdapt
                 dev.setFollowed(false);
             }
         }
+        devotionalsAdapter.notifyDataSetChanged();
     }
 
 }
