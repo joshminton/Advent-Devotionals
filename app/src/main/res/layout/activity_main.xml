@@ -90,6 +90,8 @@
         android:clickable="true"
         android:focusable="true"
         android:onClick="chooseDevotionals"
+        android:fontFamily="@font/karla"
+        android:textSize="24sp"
         >
 
     </TextView>

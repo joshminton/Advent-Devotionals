@@ -1,6 +1,12 @@
 package com.example.adventuality;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Devotional implements Serializable {
 
@@ -117,5 +123,35 @@ public class Devotional implements Serializable {
                 ", sampleURL='" + sampleURL + '\'' +
                 ", feedURL='" + feedURL + '\'' +
                 '}';
+    }
+
+    public void addDevotional(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        setFollowed(true);
+        String followedDevotionals = sharedPref.getString("devotionals", "");
+        ArrayList<String> followedDevotionalsArray = new ArrayList<>(Arrays.asList(followedDevotionals.split("@")));
+        if(!followedDevotionalsArray.contains(getFeedURL())){
+            followedDevotionals = followedDevotionals.concat(getFeedURL() + "@");
+            sharedPref.edit().putString("devotionals", followedDevotionals).apply();
+        }
+        Log.d("ADDING", followedDevotionals);
+    }
+
+    public void removeDevotional(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        setFollowed(false);
+        String followedDevotionals = sharedPref.getString("devotionals", "");
+        Log.d("Old array", followedDevotionals);
+        ArrayList<String> followedDevotionalsArray = new ArrayList<>(Arrays.asList(followedDevotionals.split("@")));
+        if(followedDevotionalsArray.contains(getFeedURL())){
+            followedDevotionalsArray.remove(getFeedURL());
+            followedDevotionals = "";
+            for(String d : followedDevotionalsArray){
+                Log.d("Followed array:", "is" + followedDevotionalsArray.toString());
+                followedDevotionals = followedDevotionals.concat(d + "@");
+            }
+            Log.d("New array", "is" + followedDevotionals);
+            sharedPref.edit().putString("devotionals", followedDevotionals).apply();
+        }
     }
 }

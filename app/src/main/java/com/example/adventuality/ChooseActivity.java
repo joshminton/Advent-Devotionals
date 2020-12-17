@@ -1,6 +1,7 @@
 package com.example.adventuality;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.card.MaterialCardView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,7 +92,6 @@ public class ChooseActivity extends AppCompatActivity implements DevotionalAdapt
                                     Devotional devotional = new Devotional(currentDevotional.getString("label"),
                                             currentDevotional.getString("feed_url"));
                                     devotional.setImageURL(currentDevotional.getString("image_url").replace("http:", "https:"));
-//                                    getDevotionalDetails(devotional);
                                     devotional.setFollowed(chosenDevotionalFeedURLs.contains(currentDevotional.getString("feed_url")));
                                     devotionals.add(devotional);
                                     devotionalsAdapter.notifyDataSetChanged();
@@ -119,6 +120,21 @@ public class ChooseActivity extends AppCompatActivity implements DevotionalAdapt
         startActivity(intent);
     }
 
+    @Override
+    public void onCheckClick(int position) {
+        Devotional dev = devotionals.get(position);
+        if(dev.isFollowed()){
+            dev.removeDevotional(this.getApplicationContext());
+            ((MaterialCardView) layoutManager.findViewByPosition(position)).setStrokeWidth(0);
+        } else {
+            dev.addDevotional(this.getApplicationContext());
+            ((MaterialCardView) layoutManager.findViewByPosition(position)).setStrokeWidth(12);
+            ((MaterialCardView) layoutManager.findViewByPosition(position)).setStrokeColor(getColor(R.color.colorAccent));
+        }
+
+        Log.d("CHECK", "MATE");
+    }
+
     public void getChosenDevotionals(){
         String followedDevotionals = sharedPref.getString("devotionals", "");
         chosenDevotionalFeedURLs = new ArrayList<>(Arrays.asList(followedDevotionals.split("@")));
@@ -133,7 +149,6 @@ public class ChooseActivity extends AppCompatActivity implements DevotionalAdapt
                 dev.setFollowed(false);
             }
         }
-        devotionalsAdapter.notifyDataSetChanged();
     }
 
 }

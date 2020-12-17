@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ public class DevotionalAdapter extends RecyclerView.Adapter<DevotionalAdapter.Vi
         private MaterialCardView layout;
         private TextView devotionalTitle;
         private ImageView devotionalImage;
+        private CheckBox checkBox;
         OnClickListener onClickListener;
 
         public ViewHolder(MaterialCardView view, OnClickListener onClickListener) {
@@ -38,7 +40,9 @@ public class DevotionalAdapter extends RecyclerView.Adapter<DevotionalAdapter.Vi
             layout = view;
             devotionalTitle = view.findViewById(R.id.devotionalTitle);
             devotionalImage = view.findViewById(R.id.devotionalImage);
+            checkBox = view.findViewById(R.id.devotionalCheck);
             this.onClickListener = onClickListener;
+            checkBox.setOnClickListener(this);
             // Define click listener for the ViewHolder's View;
             view.setOnClickListener(this);
         }
@@ -49,12 +53,17 @@ public class DevotionalAdapter extends RecyclerView.Adapter<DevotionalAdapter.Vi
 
         @Override
         public void onClick(View v) {
-            onClickListener.onDevotionalClick(getAdapterPosition());
+            if(v.getId() == R.id.devotionalCheck){
+                onClickListener.onCheckClick(getAdapterPosition());
+            } else {
+                onClickListener.onDevotionalClick(getAdapterPosition());
+            }
         }
     }
 
     public interface OnClickListener{
         void onDevotionalClick(int position);
+        void onCheckClick(int position);
     }
 
     /**
@@ -88,8 +97,14 @@ public class DevotionalAdapter extends RecyclerView.Adapter<DevotionalAdapter.Vi
         if(devotionals.get(position).isFollowed()){
             viewHolder.layout.setStrokeColor(viewHolder.getCardView().getContext().getColor(R.color.colorAccent));
             viewHolder.layout.setStrokeWidth(12);
+            if(!viewHolder.checkBox.isChecked()){
+                viewHolder.checkBox.setChecked(true);
+            }
         } else {
             viewHolder.layout.setStrokeWidth(0);
+            if(viewHolder.checkBox.isChecked()){
+                viewHolder.checkBox.setChecked(false);
+            }
         }
         Picasso.get().load(devotionals.get(position).getImageURL()).placeholder(R.drawable.example_image).into(viewHolder.devotionalImage, new Callback() {
             @Override

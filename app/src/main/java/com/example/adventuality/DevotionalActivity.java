@@ -63,10 +63,7 @@ public class DevotionalActivity extends AppCompatActivity {
                 //nothing for now
             }
         });
-        ((TextView) findViewById(R.id.txtDevotionalName)).setText(devotional.getName());
-        ((TextView) findViewById(R.id.txtDevotionalDescription)).setText(devotional.getDescription());
-        ((TextView) findViewById(R.id.txtTwitter)).setText(devotional.getTwitterURL());
-        ((TextView) findViewById(R.id.txtLink)).setText(devotional.getSubscribeURL());
+        loadDetails();
 
         ExtendedFloatingActionButton fab = ((ExtendedFloatingActionButton) findViewById(R.id.btnFollow));
 
@@ -80,10 +77,15 @@ public class DevotionalActivity extends AppCompatActivity {
     }
 
     private void loadDetails(){
+        if(devotional.getHomepageURL() != null){ //there's a better way of checking this, I know, this will do for now.
+            findViewById(R.id.linkBox).setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.txtLink)).setText(devotional.getHomepageURL());
+        } else {
+            findViewById(R.id.linkBox).setVisibility(View.GONE);
+        }
         ((TextView) findViewById(R.id.txtDevotionalName)).setText(devotional.getName());
         ((TextView) findViewById(R.id.txtDevotionalDescription)).setText(devotional.getDescription());
         ((TextView) findViewById(R.id.txtTwitter)).setText(devotional.getTwitterURL());
-        ((TextView) findViewById(R.id.txtLink)).setText(devotional.getSubscribeURL());
     }
 
     protected void getDevotionalDetails(final Devotional devotional){
@@ -99,7 +101,9 @@ public class DevotionalActivity extends AppCompatActivity {
                         try {
                             devotional.setDescription(response.getString("description"));
                             devotional.setImageURL(response.getString("image_url").replace("http:", "https:"));
-                            devotional.setHomepageURL(response.getString("homepage"));      //validate if any of these are missing?
+                            if(response.has("homepage_url")){
+                                devotional.setHomepageURL(response.getString("homepage_url"));
+                            }                                                                                   //validate if any of these are missing?
                             devotional.setTwitterURL(response.getString("twitter_handle"));
                             devotional.setSubscribeURL(response.getString("subscribe_url"));
                             devotional.setSampleURL(response.getString("sample_chapter_url"));
@@ -132,33 +136,15 @@ public class DevotionalActivity extends AppCompatActivity {
         fab = findViewById(R.id.btnFollow);
         fab.setBackgroundColor(getColor(R.color.colorRemove));
         fab.setText("Remove");
-        devotional.setFollowed(true);
-        String followedDevotionals = sharedPref.getString("devotionals", "");
-        ArrayList<String> followedDevotionalsArray = new ArrayList<>(Arrays.asList(followedDevotionals.split("@")));
-        if(!followedDevotionalsArray.contains(devotional.getFeedURL())){
-            followedDevotionals = followedDevotionals.concat(devotional.getFeedURL() + "@");
-            sharedPref.edit().putString("devotionals", followedDevotionals).apply();
-        }
-        Log.d("ADDING", followedDevotionals);
+
+        devotional.addDevotional(getApplicationContext());
     }
 
     private void removeDevotional(){
         fab = findViewById(R.id.btnFollow);
         fab.setBackgroundColor(getColor(R.color.colorAdd));
         fab.setText("Add");
-        devotional.setFollowed(false);
-        String followedDevotionals = sharedPref.getString("devotionals", "");
-        Log.d("Old array", followedDevotionals);
-        ArrayList<String> followedDevotionalsArray = new ArrayList<>(Arrays.asList(followedDevotionals.split("@")));
-        if(followedDevotionalsArray.contains(devotional.getFeedURL())){
-            followedDevotionalsArray.remove(devotional.getFeedURL());
-            followedDevotionals = "";
-            for(String d : followedDevotionalsArray){
-                Log.d("Followed array:", "is" + followedDevotionalsArray.toString());
-                followedDevotionals = followedDevotionals.concat(d + "@");
-            }
-            Log.d("New array", "is" + followedDevotionals);
-            sharedPref.edit().putString("devotionals", followedDevotionals).apply();
-        }
+
+        devotional.removeDevotional(getApplicationContext());
     }
 }
