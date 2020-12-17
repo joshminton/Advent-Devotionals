@@ -21,7 +21,11 @@ Time spent on project: ~17 hours.
 ### Instructions:
 The Android project can be downloaded and run that way, or the APK can be downloaded and installed on an Android device (I think -- not been able to access other Android devices to check this)
 
-### Figma designs
-These designs were created prior to development of the app
+### UI
+These were created using Figma prior to development of the app
 
-<img src="https://raw.githubusercontent.com/joshminton/Advent-Devotionals/main/designs/homepage.png" width="400">    <img src="https://raw.githubusercontent.com/joshminton/Advent-Devotionals/main/designs/choose.png" width="400">    <img src="https://raw.githubusercontent.com/joshminton/Advent-Devotionals/main/designs/devotional.png" width="400">
+<img src="https://raw.githubusercontent.com/joshminton/Advent-Devotionals/main/designs/homepage.png" width="400">
+
+<img src="https://raw.githubusercontent.com/joshminton/Advent-Devotionals/main/designs/choose.png" width="400">
+
+<img src="https://raw.githubusercontent.com/joshminton/Advent-Devotionals/main/designs/devotional.png" width="400">
