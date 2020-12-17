@@ -1,4 +1,4 @@
-# AdventYour
+# Advent Devotionals
 
 App lets users browse available devotionals, view details about them, choose them (from the list menu or the details) and then see today's devotionals on the home page.
 
