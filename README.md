@@ -19,7 +19,7 @@ MaterialProgressBar library used for a better looking / easier to handle progres
 Time spent on project: ~17 hours.
 
 ### Instructions:
-The Android project can be downloaded and run that way, or the APK can be downloaded and installed on an Android device (I think -- not been able to access other Android devices to check this)
+The Android project can be downloaded and run that way, or [the APK](/apk-debug.apk) can be downloaded and installed on an Android device (I think -- not been able to access other Android devices to check this)
 
 ### Interface designs
 These were created using Figma prior to development of the app.
