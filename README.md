@@ -20,3 +20,9 @@ Time spent on project: ~17 hours.
 
 ### Instructions:
 The Android project can be downloaded and run that way, or the APK can be downloaded and installed on an Android device (I think -- not been able to access other Android devices to check this)
+
+### Figma designs
+These designs were created prior to development of the app
+![Homepage](/designs/homepage.png)
+![Choose Devotionals page](/designs/choose.png)
+![Devotional Details page](/designs/devotional.png)
