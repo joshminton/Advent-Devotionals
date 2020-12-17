@@ -23,6 +23,7 @@ The Android project can be downloaded and run that way, or the APK can be downlo
 
 ### Figma designs
 These designs were created prior to development of the app
+<img src="https://raw.githubusercontent.com/joshminton/Advent-Devotionals/main/designs/choose.png" width="400">
 ![Homepage](/designs/homepage.png&s=200)
 ![Choose Devotionals page](/designs/choose.png)
 ![Devotional Details page](/designs/devotional.png)
