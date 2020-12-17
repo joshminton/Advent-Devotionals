@@ -13,7 +13,7 @@ public class Devotional implements Serializable {
     private String name;
     private String description;
     private String imageURL;
-    private String homepageURL;
+    private String homepageURL = "none";
     private String twitterURL;
     private String subscribeURL;
     private String sampleURL;

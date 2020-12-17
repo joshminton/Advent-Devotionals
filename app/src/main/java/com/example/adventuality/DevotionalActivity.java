@@ -77,9 +77,10 @@ public class DevotionalActivity extends AppCompatActivity {
     }
 
     private void loadDetails(){
-        if(devotional.getHomepageURL() != null){ //there's a better way of checking this, I know, this will do for now.
+        if(!devotional.getHomepageURL().equals("none")){ //there's a better way of checking this, I know, this will do for now.
             findViewById(R.id.linkBox).setVisibility(View.VISIBLE);
             ((TextView) findViewById(R.id.txtLink)).setText(devotional.getHomepageURL());
+            Log.d("VISIBLE", " " + devotional.getHomepageURL());
         } else {
             findViewById(R.id.linkBox).setVisibility(View.GONE);
         }
@@ -101,12 +102,14 @@ public class DevotionalActivity extends AppCompatActivity {
                         try {
                             devotional.setDescription(response.getString("description"));
                             devotional.setImageURL(response.getString("image_url").replace("http:", "https:"));
-                            if(response.has("homepage_url")){
-                                devotional.setHomepageURL(response.getString("homepage_url"));
-                            }                                                                                   //validate if any of these are missing?
+                            if(response.has("homepage")){
+                                if(!response.getString("homepage").equals("")) {
+                                    devotional.setHomepageURL(response.getString("homepage"));
+                                }
+                            }
                             devotional.setTwitterURL(response.getString("twitter_handle"));
                             devotional.setSubscribeURL(response.getString("subscribe_url"));
-                            devotional.setSampleURL(response.getString("sample_chapter_url"));
+                            devotional.setSampleURL(response.getString("sample_chapter_url"));         //validate if any of these are missing?
                             loadDetails();
                         } catch (JSONException e) {
                             e.printStackTrace();

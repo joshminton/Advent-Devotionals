@@ -77,7 +77,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
-                        app:tint="#FFFFFF"
+                        app:tint="#BFFFFFFF"
                         android:src="@drawable/twitter">
 
                     </ImageView>
@@ -105,7 +105,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
-                        app:tint="#FFFFFF"
+                        app:tint="#BFFFFFFF"
                         android:src="@drawable/baseline_link_black_24dp">
 
                     </ImageView>
